@@ -4,3 +4,43 @@ GET {{API_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+GET {{API_HostAddress}}/api/products/
+Accept: application/json
+###
+
+GET {{API_HostAddress}}/api/products/3
+Accept: application/json
+###
+
+POST {{API_HostAddress}}/api/products/
+Content-Type: application/json
+
+{
+    "Name" : "ThatIsStrange",
+    "Description" : "Lol hallo",
+    "Price": 10000,
+    "PictureUrl": "http://example.com/image.jpg",
+    "Type": "Homeware",
+    "Brand": "BrandyCane",
+    "QuantityInStock": 25
+}
+###
+
+PUT {{API_HostAddress}}/api/products/3
+Content-Type: application/json
+
+{   
+    "Id" : "3",
+    "Name" : "Totally different",
+    "Description" : "Lol goodbye",
+    "Price": 10000,
+    "PictureUrl": "http://example.com/image.jpg",
+    "Type": "Cars",
+    "Brand": "BrandyCane",
+    "QuantityInStock": 25
+}
+###
+
+DELETE {{API_HostAddress}}/api/products/3
+Content-Type: application/json

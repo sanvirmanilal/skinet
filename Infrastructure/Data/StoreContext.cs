@@ -10,5 +10,5 @@ public class StoreContext : DbContext
     {
     }
 
-    public DbSet<Product> MyProperty { get; set; }
+    public DbSet<Product> Products { get; set; }
 }
