@@ -1,7 +1,10 @@
+using System.Reflection.Metadata.Ecma335;
 using Core.Entities;
 using Core.Interfaces;
 using Infrastracture.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
+using Microsoft.Identity.Client;
 
 namespace Infrastructure.Data;
 
@@ -36,19 +39,26 @@ public class ProductRepository(StoreContext dbContext) : IProductRepository
         return await dbContext.Products.FindAsync(id);
     }
 
-    public async Task<IReadOnlyList<Product>> GetProductsAsync(string? brand, string? type)
+    public async Task<IReadOnlyList<Product>> GetProductsAsync(string? brand, string? type, string? sort)
     {
         var query = dbContext.Products.AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(brand))
         {
-            query = query.Where(x=>x.Brand.Equals(brand));
+            query = query.Where(x => x.Brand.Equals(brand));
         }
 
         if (!string.IsNullOrWhiteSpace(type))
         {
-            query = query.Where(x=>x.Type.Equals(type));
+            query = query.Where(x => x.Type.Equals(type));
         }
+
+        query = sort switch
+        {
+            "priceAsc" => query.OrderBy(x => x.Price),
+            "priceDesc" => query.OrderByDescending(x => x.Price),
+            _ => query.OrderBy(x => x.Name),
+        };
 
         return await query.ToListAsync();
     }

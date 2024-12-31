@@ -9,9 +9,9 @@ namespace API.Controllers;
 public class ProductsController(IProductRepository productRepository) : ControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts(string? brand, string? type)
+    public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts(string? brand, string? type, string? sort)
     {
-        return Ok(await productRepository.GetProductsAsync(brand, type));
+        return Ok(await productRepository.GetProductsAsync(brand, type, sort));
     }
 
     [HttpGet("{id:int}")]
@@ -61,14 +61,14 @@ public class ProductsController(IProductRepository productRepository) : Controll
         {
             var product = await productRepository.GetProductByIdAsync(id);
             productRepository.DeleteProduct(product);
-             if (await productRepository.SaveChangesAsync())
+            if (await productRepository.SaveChangesAsync())
             {
                 return NoContent();
             }
             else
             {
                 return BadRequest("Problem deleting product");
-            }            
+            }
         }
         else
         {
@@ -81,7 +81,7 @@ public class ProductsController(IProductRepository productRepository) : Controll
     {
         return Ok(await productRepository.GetBrandsAsync());
     }
-    
+
     [HttpGet("types")]
     public async Task<ActionResult<IReadOnlyList<string>>> GetTypes()
     {
