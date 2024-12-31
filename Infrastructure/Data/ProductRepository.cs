@@ -17,6 +17,20 @@ public class ProductRepository(StoreContext dbContext) : IProductRepository
         dbContext.Products.Remove(product);
     }
 
+    public async Task<IReadOnlyList<string>> GetBrandsAsync()
+    {
+        return await dbContext.Products.Select(x => x.Brand)
+        .Distinct()
+        .ToListAsync();
+    }
+
+    public async Task<IReadOnlyList<string>> GetTypesAsync()
+    {
+        return await dbContext.Products.Select(x => x.Type)
+        .Distinct()
+        .ToListAsync();
+    }
+
     public async Task<Product?> GetProductByIdAsync(int id)
     {
         return await dbContext.Products.FindAsync(id);
@@ -29,7 +43,7 @@ public class ProductRepository(StoreContext dbContext) : IProductRepository
 
     public bool ProductExists(int id)
     {
-        return dbContext.Products.Any(x=>x.Id.Equals(id));
+        return dbContext.Products.Any(x => x.Id.Equals(id));
     }
 
     public async Task<bool> SaveChangesAsync()
