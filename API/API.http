@@ -9,7 +9,7 @@ GET {{API_HostAddress}}/api/products/
 Accept: application/json
 ###
 
-GET {{API_HostAddress}}/api/products/3
+GET {{API_HostAddress}}/api/products/2
 Accept: application/json
 ###
 
@@ -17,7 +17,7 @@ POST {{API_HostAddress}}/api/products/
 Content-Type: application/json
 
 {
-    "Name" : "ThatIsStrange",
+    "Name" : "what",
     "Description" : "Lol hallo",
     "Price": 10000,
     "PictureUrl": "http://example.com/image.jpg",
@@ -42,5 +42,5 @@ Content-Type: application/json
 }
 ###
 
-DELETE {{API_HostAddress}}/api/products/3
+DELETE {{API_HostAddress}}/api/products/1003
 Content-Type: application/json
