@@ -6,16 +6,11 @@ namespace Infrastructure.Data.SeedData;
 
 public class StoreContextSeed
 {
-    public static async Task SeedAsync(StoreContext storeContext)
+    public static async Task<List<Product>> GetSeedDataAsync()
     {
-        if (!storeContext.Products.Any())
-        {
-            var textProducts = await File.ReadAllTextAsync("../Infrastructure/Data/SeedData/products.json");
-            var products = JsonSerializer.Deserialize<IEnumerable<Product>>(textProducts);
-            if (products != null)
-            {
-                await storeContext.AddRangeAsync(products);
-            }
-        }
+
+        var textProducts = await File.ReadAllTextAsync("../Infrastructure/Data/SeedData/products.json");
+        var products = JsonSerializer.Deserialize<List<Product>>(textProducts);
+        return products;
     }
 }
