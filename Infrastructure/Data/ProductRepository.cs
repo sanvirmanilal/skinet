@@ -36,9 +36,21 @@ public class ProductRepository(StoreContext dbContext) : IProductRepository
         return await dbContext.Products.FindAsync(id);
     }
 
-    public async Task<IReadOnlyList<Product>> GetProductsAsync()
+    public async Task<IReadOnlyList<Product>> GetProductsAsync(string? brand, string? type)
     {
-        return await dbContext.Products.ToListAsync();
+        var query = dbContext.Products.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(brand))
+        {
+            query = query.Where(x=>x.Brand.Equals(brand));
+        }
+
+        if (!string.IsNullOrWhiteSpace(type))
+        {
+            query = query.Where(x=>x.Type.Equals(type));
+        }
+
+        return await query.ToListAsync();
     }
 
     public bool ProductExists(int id)

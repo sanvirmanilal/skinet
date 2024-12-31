@@ -9,6 +9,10 @@ GET {{API_HostAddress}}/api/products/
 Accept: application/json
 ###
 
+GET {{API_HostAddress}}/api/products/?brand=Angular&type=Boots
+Accept: application/json
+###
+
 GET {{API_HostAddress}}/api/products/2
 Accept: application/json
 ###
@@ -44,3 +48,16 @@ Content-Type: application/json
 
 DELETE {{API_HostAddress}}/api/products/1003
 Content-Type: application/json
+###
+
+GET {{API_HostAddress}}/api/products/brands/
+Accept: application/json
+###
+
+GET {{API_HostAddress}}/api/products/brands/?brand=Angular
+Accept: application/json
+###
+
+GET {{API_HostAddress}}/api/products/types/
+Accept: application/json
+###
