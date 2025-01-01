@@ -1,10 +1,7 @@
-using System.Reflection.Metadata.Ecma335;
 using Core.Entities;
 using Core.Interfaces;
 using Infrastracture.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.Internal;
-using Microsoft.Identity.Client;
 
 namespace Infrastructure.Data;
 
@@ -63,18 +60,18 @@ public class ProductRepository(StoreContext dbContext) : IProductRepository
         return await query.ToListAsync();
     }
 
-    public bool ProductExists(int id)
-    {
-        return dbContext.Products.Any(x => x.Id.Equals(id));
-    }
-
-    public async Task<bool> SaveChangesAsync()
-    {
-        return await dbContext.SaveChangesAsync() > 0;
-    }
-
     public void UpdateProduct(Product product)
     {
-        dbContext.Products.Update(product);
+        throw new NotImplementedException();
+    }
+
+    public bool ProductExists(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<bool> SaveChangesAsync()
+    {
+        throw new NotImplementedException();
     }
 }
