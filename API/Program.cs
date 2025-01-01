@@ -3,7 +3,6 @@ using Core.Interfaces;
 using Infrastracture.Data;
 using Infrastructure.Data;
 using Infrastructure.Data.SeedData;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,7 +22,6 @@ builder.Services.AddDbContext<StoreContext>(async opt =>
     opt.EnableSensitiveDataLogging();
 });
 
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 Console.WriteLine(typeof(IGenericRepository<>));
 Console.WriteLine(typeof(GenericRepository<>));

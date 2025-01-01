@@ -10,6 +10,7 @@ public interface IGenericRepository<T> where T : BaseEntity
     void Update(T entity);
     void Delete(T entity);
     Task<bool> SaveAllChangesAsync();
-
     Task<bool> Exists(int id);
+    Task<T?> GetEntityWithSpec(ISpecification<T> specification);
+    Task<IReadOnlyList<T>> ListAsync(ISpecification<T> specification);
 }
