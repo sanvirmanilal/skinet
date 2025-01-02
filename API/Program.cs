@@ -1,3 +1,4 @@
+using API.Middleware;
 using Core.Entities;
 using Core.Interfaces;
 using Infrastracture.Data;
@@ -25,6 +26,7 @@ builder.Services.AddDbContext<StoreContext>(opt =>
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 var app = builder.Build();
 
+app.UseMiddleware<ExceptionMiddleware>();
 app.MapControllers();
 
 try
@@ -38,5 +40,4 @@ catch (System.Exception ex)
 {
     Console.WriteLine(ex);
 }
-
 app.Run();

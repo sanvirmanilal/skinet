@@ -24,6 +24,6 @@ POST {{API_HostAddress}}/api/buggy/validationerror
 Content-Type: application/json
 
 {
-    
+    "Name" : "s" 
 }
 ###
