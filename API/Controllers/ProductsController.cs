@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using Core.Entities;
 using Core.Interfaces;
 using Core.Specifications;
@@ -86,6 +87,9 @@ public class ProductsController(IGenericRepository<Product> productRepository) :
     [HttpGet("brands")]
     public async Task<ActionResult<IReadOnlyList<string>>> GetBrands()
     {
+        var spec = new ProductSpecification(string.Empty, string.Empty, string.Empty);
+
+        await productRepository.ListAsync(spec);
         return Ok();
     }
 

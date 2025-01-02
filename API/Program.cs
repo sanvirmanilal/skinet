@@ -23,8 +23,6 @@ builder.Services.AddDbContext<StoreContext>(async opt =>
 });
 
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-Console.WriteLine(typeof(IGenericRepository<>));
-Console.WriteLine(typeof(GenericRepository<>));
 var app = builder.Build();
 
 app.MapControllers();
