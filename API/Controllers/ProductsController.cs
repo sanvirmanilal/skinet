@@ -5,9 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
-[ApiController]
-[Route("api/[controller]")]
-public class ProductsController(IGenericRepository<Product> productRepository) : ControllerBase
+public class ProductsController(IGenericRepository<Product> productRepository) : BaseController
 {
     [HttpGet]
     public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts([FromQuery] ProductSpecParams productSpecParams)
@@ -22,7 +20,7 @@ public class ProductsController(IGenericRepository<Product> productRepository) :
     {
         var product = await productRepository.GetByIdAsync(id);
         return product != null ? product : NotFound();
-    }
+    }    
 
     [HttpPost]
     public async Task<ActionResult<Product>> AddProduct(Product product)

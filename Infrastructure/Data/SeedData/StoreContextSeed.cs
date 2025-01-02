@@ -8,6 +8,6 @@ public class StoreContextSeed
     {
         var textProducts = await File.ReadAllTextAsync("../Infrastructure/Data/SeedData/products.json");
         var products = JsonSerializer.Deserialize<List<Product>>(textProducts);
-        return products;
+        return products ?? [];
     }
 }
