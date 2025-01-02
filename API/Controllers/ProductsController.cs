@@ -1,4 +1,3 @@
-using System.Net.Http.Headers;
 using Core.Entities;
 using Core.Interfaces;
 using Core.Specifications;
@@ -11,9 +10,10 @@ namespace API.Controllers;
 public class ProductsController(IGenericRepository<Product> productRepository) : ControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts(string? brand, string? type, string? sort)
+    public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts([FromQuery] ProductSpecParams productSpecParams)
     {
-        var spec = new ProductSpecification(brand, type, sort);
+        var spec = new ProductSpecification(productSpecParams);
+
         return Ok(await productRepository.ListAsync(spec));
     }
 

@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Core.Interfaces;
 
 namespace Infrastructure.Data;
@@ -25,6 +26,8 @@ public class SpecificationEvaluator<T>
         {
             query = query.Distinct();
         }
+
+        query = query.Skip(specification.PageSize * specification.PageNumber).Take(specification.PageSize);
 
         return query;
     }
@@ -57,6 +60,8 @@ public class SpecificationEvaluator<T>
         {
             selectQuery = selectQuery?.Distinct();
         }
+
+        selectQuery = selectQuery?.Skip(specification.PageSize * specification.PageNumber).Take(specification.PageSize);
 
         return selectQuery ?? query.Cast<TResult>();
     }

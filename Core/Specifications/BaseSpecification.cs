@@ -14,6 +14,10 @@ public class BaseSpecification<T>(Expression<Func<T, bool>>? criteria) : ISpecif
     public Expression<Func<T, object>>? OrderByDesc { get; private set; }
     public bool IsDistinct { get; private set; }
 
+    public int PageNumber { get; private set; }
+
+    public int PageSize { get; private set; }
+
     protected void SetOrderBy(Expression<Func<T, object>> orderBy)
     {
         OrderBy = orderBy;
@@ -27,6 +31,30 @@ public class BaseSpecification<T>(Expression<Func<T, bool>>? criteria) : ISpecif
     protected void ApplyDistinct()
     {
         IsDistinct = true;
+    }
+
+    protected void SetPageNumber(int? pageNumber)
+    {
+        if (pageNumber != null)
+        {
+            PageNumber = pageNumber.Value;
+        }
+        else
+        {
+            PageNumber = default;
+        }
+    }
+
+    protected void SetPageSize(int? pageSize)
+    {
+        if (pageSize != null)
+        {
+            PageSize = pageSize.Value;
+        }
+        else
+        {
+            PageSize = default;
+        }
     }
 }
 

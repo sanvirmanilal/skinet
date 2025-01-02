@@ -9,7 +9,11 @@ GET {{API_HostAddress}}/api/products/
 Accept: application/json
 ###
 
-GET {{API_HostAddress}}/api/products/?brand=Angular
+GET {{API_HostAddress}}/api/products/?brands=Angular
+Accept: application/json
+###
+
+GET {{API_HostAddress}}/api/products/?pageSize=500
 Accept: application/json
 ###
 
