@@ -1,0 +1,29 @@
+@API_HostAddress = http://localhost:5270
+
+GET {{API_HostAddress}}/api/buggy/unauthorized
+Accept: application/json
+
+###
+
+GET {{API_HostAddress}}/api/buggy/badrequest
+Accept: application/json
+
+###
+
+GET {{API_HostAddress}}/api/buggy/notfound
+Accept: application/json
+
+###
+
+GET {{API_HostAddress}}/api/buggy/internalerror
+Accept: application/json
+
+###
+
+POST {{API_HostAddress}}/api/buggy/validationerror
+Content-Type: application/json
+
+{
+    
+}
+###
