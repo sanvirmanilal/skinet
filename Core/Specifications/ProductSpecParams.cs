@@ -23,6 +23,8 @@ public class ProductSpecParams
     }
 
     public string? Sort { get; set; }
+
+    public string? Search { get; set; }
     public int PageSize { get; set; } = 5;
     public int PageNumber { get; set; } = 0;
 }

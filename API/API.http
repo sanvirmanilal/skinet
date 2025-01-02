@@ -9,7 +9,7 @@ GET {{API_HostAddress}}/api/products/
 Accept: application/json
 ###
 
-GET {{API_HostAddress}}/api/products/?search=red
+GET {{API_HostAddress}}/api/products/?search=purp&types=Boots
 Accept: application/json
 ###
 
