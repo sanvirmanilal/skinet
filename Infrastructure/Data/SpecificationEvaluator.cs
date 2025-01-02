@@ -45,7 +45,7 @@ public class SpecificationEvaluator<T>
         {
             query = query.OrderByDescending(specification.OrderByDesc);
         }
-        
+
         var selectQuery = query as IQueryable<TResult>;
 
         if (specification.Select != null)
@@ -55,7 +55,7 @@ public class SpecificationEvaluator<T>
 
         if (specification.IsDistinct)
         {
-            query = query.Distinct();
+            selectQuery = selectQuery?.Distinct();
         }
 
         return selectQuery ?? query.Cast<TResult>();
