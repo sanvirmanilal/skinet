@@ -8,7 +8,7 @@ export class ShopService {
   baseUrl = 'https://localhost:5001/api/'
   private http = inject(HttpClient)
   getProducts() {
-    return this.http.get<any>(this.baseUrl + 'products');
+    return this.http.get<any>(this.baseUrl + 'products?pageSize=20');
   }
 }
 
