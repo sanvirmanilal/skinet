@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from "./layout/header/header.component";
 import { HttpClient } from '@angular/common/http';
+import { Product } from './shared/models/product';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,7 @@ export class AppComponent implements OnInit {
   baseUrl = 'https://localhost:5001/api/'
   private http = inject(HttpClient)
   title = 'Skinet';
-  products: any[] = [];
+  products: Product[] = [];
 
   ngOnInit(): void {
     this.http.get<any>(this.baseUrl + 'products').subscribe({
