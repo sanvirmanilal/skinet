@@ -12,6 +12,11 @@ public class GenericRepository<T>(StoreContext storeContext) : IGenericRepositor
         await storeContext.Set<T>().AddAsync(entity);
     }
 
+    public async Task<int> CountAsync(ISpecification<T> spec)
+    {
+        return await ApplySpecification(spec).CountAsync();
+    }
+
     public void Delete(T entity)
     {
         storeContext.Set<T>().Remove(entity);
