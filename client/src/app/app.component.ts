@@ -10,14 +10,16 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
+  baseUrl = 'https://localhost:5001/api/'
+  private http = inject(HttpClient)
+  title = 'Skinet';
+  products: any[] = [];
+
   ngOnInit(): void {
-    this.http.get(this.baseUrl + 'products').subscribe({
-      next: data => console.log(data),
+    this.http.get<any>(this.baseUrl + 'products').subscribe({
+      next: response => this.products = response,
       error: error => console.error(error),
       complete: () => console.log('complete')
     });
   }
-  baseUrl = 'https://localhost:5001/api/'
-  private http = inject(HttpClient)
-  title = 'skinet';
 }
