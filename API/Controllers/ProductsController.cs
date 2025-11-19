@@ -13,7 +13,7 @@ public class ProductsController(StoreContext storeContext) : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Product>>> Get()
     {
-        return await storeContext.Products.ToListAsync();
+        return Ok(await storeContext.Products.ToListAsync());
     }
 
     [HttpGet("{id:int}")] // api/products/2
@@ -22,7 +22,7 @@ public class ProductsController(StoreContext storeContext) : ControllerBase
         var product = await storeContext.Products.FindAsync(id);
         return product == null
                 ? NotFound()
-                : product;
+                : Ok(product);
     }
 
     /// <summary>
