@@ -1,6 +1,21 @@
-@API_HostAddress = http://localhost:5038
+@API_HostAddress = https://localhost:5001
 
 GET {{API_HostAddress}}/weatherforecast
 Accept: application/json
 
 ###
+
+POST /api/products HTTP/1.1
+Host: localhost:5001
+Content-Type: application/json
+Content-Length: 358
+
+{
+    "name": "Chair",
+    "description": "Assumenda fugit est. Totam aperiam hic blanditiis aliquam officiis impedit ullam. Quaerat ab temporibus omnis minus doloremque. Expedita temporibus ex asperiores.",
+    "price": 186.93,
+    "pictureUrl": "http://placeimg.com/640/480",
+    "type": "Some type",
+    "brand": "Some brand",
+    "quantityInStock": 431
+}

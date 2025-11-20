@@ -1,4 +1,3 @@
-using System.Net;
 using Core.Entities;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
@@ -25,13 +24,8 @@ public class ProductsController(StoreContext storeContext) : ControllerBase
                 : Ok(product);
     }
 
-    /// <summary>
-    /// Creates a new product in the store.
-    /// </summary>
-    /// <param name="product">The product to create.</param>
-    /// <returns>The created product if successful; otherwise, a BadRequest result.</returns>
     [HttpPost]
-    public async Task<ActionResult<Product>> CreateProduct([FromBody] Product product)
+    public async Task<ActionResult<Product>> CreateProduct(Product product)
     {
         if (!ModelState.IsValid)
         {
@@ -55,5 +49,53 @@ public class ProductsController(StoreContext storeContext) : ControllerBase
         }
 
         return BadRequest("Failed to create the product. Please check the input data and try again.");
+    }
+
+    [HttpPut("{id:int}")]
+    public async Task<ActionResult> UpdateProduct(int id, Product product)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        if (id != product.Id)
+        {
+            return BadRequest("Route id does not match product id in body.");
+        }
+
+        var existingProduct = await storeContext.Products.FindAsync(id);
+
+        if (existingProduct != null)
+        {
+            existingProduct.Name = product.Name;
+            existingProduct.Description = product.Description;
+            existingProduct.Price = product.Price;
+
+            await storeContext.SaveChangesAsync();
+            return Ok();
+        }
+        else
+        {
+            return NotFound();
+        }
+    }
+
+    [HttpDelete("{id:int}")]
+    public async Task<ActionResult> DeleteProduct(int id)
+    {
+        var product = await storeContext.Products.FindAsync(id);
+
+        if (product != null)
+        {
+            storeContext.Products.Remove(product);
+            await storeContext.SaveChangesAsync();
+        }
+        else
+        {
+            return NotFound();
+        }
+
+        return NoContent();
     }
 }
