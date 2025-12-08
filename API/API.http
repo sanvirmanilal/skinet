@@ -1,21 +1,50 @@
 @API_HostAddress = https://localhost:5001
 
-GET {{API_HostAddress}}/weatherforecast
+# Get all products
+GET {{API_HostAddress}}/api/products
 Accept: application/json
 
 ###
 
-POST /api/products HTTP/1.1
+# Get product by ID
+GET {{API_HostAddress}}/api/products/1
+Accept: application/json
+
+###
+
+# Create a new product
+POST  {{API_HostAddress}}/api/products
 Host: localhost:5001
 Content-Type: application/json
-Content-Length: 358
 
 {
-    "name": "Chair",
-    "description": "Assumenda fugit est. Totam aperiam hic blanditiis aliquam officiis impedit ullam. Quaerat ab temporibus omnis minus doloremque. Expedita temporibus ex asperiores.",
-    "price": 186.93,
+    "name": "Fish",
+    "description": "Ut rerum aut quasi non. Nam ut est qui ut aperiam sunt nam et esse. Corporis aliquid est sunt sit cupiditate dolor temporibus esse. Sed quas sint voluptatibus veritatis voluptatem et hic.",
+    "price": 590.28,
     "pictureUrl": "http://placeimg.com/640/480",
-    "type": "Some type",
-    "brand": "Some brand",
-    "quantityInStock": 431
+    "type": "Plastic",
+    "brand": "Auer - Oberbrunner",
+    "quantityInStock": 597
 }
+
+###
+
+# Update a product
+PUT {{API_HostAddress}}/api/products/1
+Content-Type: application/json
+
+{
+    "id": 1,
+    "name": "Updated Chair",
+    "description": "Updated description for the chair",
+    "price": 199.99,
+    "pictureUrl": "http://placeimg.com/640/480",
+    "type": "Furniture",
+    "brand": "Premium Brand",
+    "quantityInStock": 50
+}
+
+###
+
+# Delete a product
+DELETE {{API_HostAddress}}/api/products/1

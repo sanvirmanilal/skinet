@@ -1,51 +1,42 @@
 using Core.Entities;
-using Infrastructure.Data;
+using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ProductsController(StoreContext storeContext) : ControllerBase
+public class ProductsController(IRepository<Product> productRepository) : ControllerBase
 {
+
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Product>>> Get()
+    public async Task<ActionResult<IReadOnlyList<Product>>> Get()
     {
-        return Ok(await storeContext.Products.ToListAsync());
+        return Ok(await productRepository.GetAllAsync());
     }
 
     [HttpGet("{id:int}")] // api/products/2
     public async Task<ActionResult<Product>> GetProduct(int id)
     {
-        var product = await storeContext.Products.FindAsync(id);
+        var product = await productRepository.GetByIdAsync(id);
         return product == null
                 ? NotFound()
                 : Ok(product);
     }
 
     [HttpPost]
-    public async Task<ActionResult<Product>> CreateProduct(Product product)
+    public async Task<ActionResult<Product>> CreateProduct([FromBody] Product product)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
 
-        await storeContext.Products.AddAsync(product);
+        productRepository.Add(product);
 
-        var result = await storeContext.SaveChangesAsync();
-
-        if (result > 0)
+        if (await productRepository.SaveChangesAsync())
         {
-            var productDto = new ProductDto
-            {
-                Id = product.Id,
-                Name = product.Name,
-                Description = product.Description,
-                Price = product.Price
-            };
-            return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, productDto);
+            return CreatedAtAction(nameof(GetProduct), new { id = product.Id });
         }
 
         return BadRequest("Failed to create the product. Please check the input data and try again.");
@@ -64,15 +55,10 @@ public class ProductsController(StoreContext storeContext) : ControllerBase
             return BadRequest("Route id does not match product id in body.");
         }
 
-        var existingProduct = await storeContext.Products.FindAsync(id);
+        productRepository.Update(product);
 
-        if (existingProduct != null)
+        if (await productRepository.SaveChangesAsync())
         {
-            existingProduct.Name = product.Name;
-            existingProduct.Description = product.Description;
-            existingProduct.Price = product.Price;
-
-            await storeContext.SaveChangesAsync();
             return Ok();
         }
         else
@@ -84,12 +70,12 @@ public class ProductsController(StoreContext storeContext) : ControllerBase
     [HttpDelete("{id:int}")]
     public async Task<ActionResult> DeleteProduct(int id)
     {
-        var product = await storeContext.Products.FindAsync(id);
+        var product = await productRepository.GetByIdAsync(id);
 
         if (product != null)
         {
-            storeContext.Products.Remove(product);
-            await storeContext.SaveChangesAsync();
+            productRepository.Delete(product);
+            await productRepository.SaveChangesAsync();
         }
         else
         {
