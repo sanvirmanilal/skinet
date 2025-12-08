@@ -16,4 +16,18 @@ builder.Services.AddScoped<IRepository<Product>, ProductRepository>();
 
 var app = builder.Build();
 app.MapControllers();
+
+try
+{
+    using var scope = app.Services.CreateScope();
+    var context = scope.ServiceProvider.GetRequiredService<StoreContext>();
+    await context.Database.MigrateAsync();
+    await StoreContextSeed.SeedAsync(context);
+}
+catch (Exception exception)
+{
+    Console.WriteLine(exception);
+    throw;
+}
+
 app.Run();
