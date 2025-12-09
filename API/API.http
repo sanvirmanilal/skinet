@@ -6,6 +6,25 @@ Accept: application/json
 
 ###
 
+# Filter on brand or type with sort
+GET {{API_HostAddress}}/api/products?brand=NetCore&sort=priceAsc&type=Boots
+Accept: application/json
+
+###
+
+
+# Get all brands
+GET {{API_HostAddress}}/api/products/brands
+Accept: application/json
+
+###
+
+# Get all types
+GET {{API_HostAddress}}/api/products/types
+Accept: application/json
+
+###
+
 # Get product by ID
 GET {{API_HostAddress}}/api/products/1
 Accept: application/json

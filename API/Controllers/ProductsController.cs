@@ -6,13 +6,12 @@ namespace API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ProductsController(IRepository<Product> productRepository) : ControllerBase
+public class ProductsController(IProductRepository productRepository) : ControllerBase
 {
-
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyList<Product>>> Get()
+    public async Task<ActionResult<IReadOnlyList<Product>>> Get(string? brand, string? type, string? sort)
     {
-        return Ok(await productRepository.GetAllAsync());
+        return Ok(await productRepository.GetProductsAsync(brand, type, sort));
     }
 
     [HttpGet("{id:int}")] // api/products/2
@@ -22,6 +21,24 @@ public class ProductsController(IRepository<Product> productRepository) : Contro
         return product == null
                 ? NotFound()
                 : Ok(product);
+    }
+
+    [HttpGet("brands")] // api/products/brands
+    public async Task<ActionResult<string>> GetBrands()
+    {
+        var brands = await productRepository.GetBrandsAsync();
+        return brands == null
+                ? NotFound()
+                : Ok(brands);
+    }
+
+    [HttpGet("types")] // api/products/types
+    public async Task<ActionResult<string>> GetTypes()
+    {
+        var types = await productRepository.GetTypesAsync();
+        return types == null
+                ? NotFound()
+                : Ok(types);
     }
 
     [HttpPost]
